@@ -92,8 +92,7 @@ public class MaquinaConnection {
     // VERIFICANDO SE JÁ EXISTE A MAQUINA NA DB
     private long IsMaquinaAlreadyInDB(Maquina maquina) throws IOException {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            //
-            String verifier = "{\"$id\":\"1\",\"Message\":\"Ocorreu um erro.\",\"ExceptionMessage\":\"A sequência não contém elementos\"";
+
             URIBuilder urlbuild = new URIBuilder(this.url + "identifier/" + maquina.getIdentifier());
 
             HttpGet request = new HttpGet(urlbuild.build());

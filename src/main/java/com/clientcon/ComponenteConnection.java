@@ -97,7 +97,7 @@ public class ComponenteConnection {
         // Request parameters and other properties.
         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
         params.add(new BasicNameValuePair("nome_componente", "CPU"));
-        params.add(new BasicNameValuePair("capacidade", String.format("%.2f", cp.getSystemCpuLoadBetweenTicks() * 100)));
+        params.add(new BasicNameValuePair("capacidade", "100"));
         params.add(new BasicNameValuePair("id_maquina", String.valueOf(id_maquina)));
         params.add(new BasicNameValuePair("descricao_componente", "CPU: " + String.valueOf(cp)));
         httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
