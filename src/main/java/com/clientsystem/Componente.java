@@ -17,7 +17,7 @@ public class Componente {
 
     private int id_componente;
     private String nome_componente;
-    private double capacidade;
+    private String capacidade;
     private int id_maquina;
 
     public int getId_componente() {
@@ -36,11 +36,11 @@ public class Componente {
         this.nome_componente = nome_componente;
     }
 
-    public double getCapacidade() {
+    public String getCapacidade() {
         return capacidade;
     }
 
-    public void setCapacidade(double capacidade) {
+    public void setCapacidade(String capacidade) {
         this.capacidade = capacidade;
     }
 
@@ -55,7 +55,7 @@ public class Componente {
     public String relatorio() {
         StringBuilder resultado = new StringBuilder();
 
-        resultado.append("== informações da Maquina ==\n").append("id = ").append(getId_componente()).
+        resultado.append("== informações do Componente ==\n").append("id = ").append(getId_componente()).
         append("\nNome Componente = ").append(getNome_componente())
                 .append("\nCapacidade = ").append(getCapacidade())
                 .append("\nID Máquina = ").append(getId_maquina())
