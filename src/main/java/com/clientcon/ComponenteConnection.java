@@ -1,9 +1,7 @@
 package com.clientcon;
 
 import com.clientsystem.Componente;
-import com.clientsystem.Maquina;
 import com.google.gson.Gson;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -23,9 +21,7 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +81,7 @@ public class ComponenteConnection {
             System.out.println(request);
             HttpResponse response = client.execute(request);
 
-            this.ram = JsonToComponente(JsonStringBuilder(response));
+            this.ram = JsonToComponente(Connection.JsonStringBuilder(response));
             try {
                 return this.ram.getId_componente();
             } catch (NullPointerException e) {
@@ -109,7 +105,7 @@ public class ComponenteConnection {
             System.out.println(request);
             HttpResponse response = client.execute(request);
 
-            this.cpu = JsonToComponente(JsonStringBuilder(response));
+            this.cpu = JsonToComponente(Connection.JsonStringBuilder(response));
             try {
                 return this.cpu.getId_componente();
             } catch (NullPointerException e) {
@@ -134,7 +130,7 @@ public class ComponenteConnection {
             System.out.println(request);
             HttpResponse response = client.execute(request);
 
-            this.disk = JsonToComponente(JsonStringBuilder(response));
+            this.disk = JsonToComponente(Connection.JsonStringBuilder(response));
             try {
                 return this.disk.getId_componente();
             } catch (NullPointerException e) {
@@ -163,7 +159,7 @@ public class ComponenteConnection {
 
         //Execute and get the response.
         HttpResponse response = httpclient.execute(httppost);
-        return JsonToComponente(JsonStringBuilder(response));
+        return JsonToComponente(Connection.JsonStringBuilder(response));
     }
 
     // Criação do Disk Storage no Banco de Dados
@@ -188,7 +184,7 @@ public class ComponenteConnection {
 
             //Execute and get the response.
             HttpResponse response = httpclient.execute(httppost);
-            return JsonToComponente(JsonStringBuilder(response));
+            return JsonToComponente(Connection.JsonStringBuilder(response));
         }
         return null;
     }
@@ -208,27 +204,12 @@ public class ComponenteConnection {
 
         //Execute and get the response.
         HttpResponse response = httpclient.execute(httppost);
-        return JsonToComponente(JsonStringBuilder(response));
+        return JsonToComponente(Connection.JsonStringBuilder(response));
     }
 
     private Componente JsonToComponente(String json) {
         Gson gson = new Gson();
         return gson.fromJson(String.valueOf(json), Componente.class);
-    }
-
-    private String JsonStringBuilder(HttpResponse response) throws IOException {
-        BufferedReader bufReader = new BufferedReader(new InputStreamReader(
-                response.getEntity().getContent()));
-
-        StringBuilder builder = new StringBuilder();
-        String line;
-
-        while ((line = bufReader.readLine()) != null) {
-            builder.append(line);
-            builder.append(System.lineSeparator());
-        }
-
-        return String.valueOf(builder);
     }
 
     public Componente getRam() {
