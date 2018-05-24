@@ -2,7 +2,7 @@ package com.clientsystem;
 
 public class Leitura {
     private long id_leitura;
-    private double valor_leitura;
+    private String valor_leitura;
     private String momento_leitura;
     private long id_componente;
 
@@ -14,11 +14,11 @@ public class Leitura {
         this.id_leitura = id_leitura;
     }
 
-    public double getValor_leitura() {
+    public String getValor_leitura() {
         return valor_leitura;
     }
 
-    public void setValor_leitura(double valor_leitura) {
+    public void setValor_leitura(String valor_leitura) {
         this.valor_leitura = valor_leitura;
     }
 
@@ -43,7 +43,7 @@ public class Leitura {
         StringBuilder resultado = new StringBuilder();
 
         resultado.append("== informações da Leitura ==\n")
-                .append("id = ").append(getId_leitura())
+                .append("id_leitura = ").append(getId_leitura())
                 .append("\nMomento = ").append(getMomento_leitura())
                 .append("\nValor = ").append(getValor_leitura())
                 .append("\nid Componente = ").append(getId_componente())

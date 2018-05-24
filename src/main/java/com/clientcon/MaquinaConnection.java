@@ -69,21 +69,7 @@ public class MaquinaConnection {
             System.out.println(request);
             HttpResponse response = client.execute(request);
 
-            BufferedReader bufReader = new BufferedReader(new InputStreamReader(
-                    response.getEntity().getContent()));
-
-            StringBuilder builder = new StringBuilder();
-            String line;
-
-            while ((line = bufReader.readLine()) != null) {
-                builder.append(line);
-                builder.append(System.lineSeparator());
-            }
-
-            System.out.println(builder);
-
-            Gson gson = new Gson();
-            Maquina maquinaDoBanco = gson.fromJson(String.valueOf(builder), Maquina.class);
+            Maquina maquinaDoBanco = JsonToMaquina(Connection.JsonStringBuilder(response));
 
             System.out.println(maquinaDoBanco.relatorio());
             System.out.println(this.maquina.relatorio());
@@ -122,6 +108,11 @@ public class MaquinaConnection {
         //Execute and get the response.
         HttpResponse response = httpclient.execute(httppost);
         HttpEntity entity = response.getEntity();
+    }
+
+    private Maquina JsonToMaquina(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(String.valueOf(json), Maquina.class);
     }
 
     public Maquina getMaquina() {

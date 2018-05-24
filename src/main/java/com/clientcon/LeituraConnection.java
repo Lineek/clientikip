@@ -19,6 +19,7 @@ import oshi.software.os.OperatingSystem;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,19 +31,21 @@ public class LeituraConnection {
     private CentralProcessor cp = hal.getProcessor();
 
     private UrlConnection urlConnection= new UrlConnection();
-    private String url = urlConnection.getComponente_url();
+    private String url = urlConnection.getLeitura_url();
 
     public Leitura LeituraPostRAM(long id_componente) throws IOException {
         HttpClient httpclient = HttpClients.createDefault();
         HttpPost httppost = new HttpPost(this.url);
 
+        // Formatando a DATA e Hora
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         String valor = String.valueOf(this.memory.getTotal() - this.memory.getAvailable());
         // Request parameters and other properties.
         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-        params.add(new BasicNameValuePair("nome_componente", "RAM"));
-        params.add(new BasicNameValuePair("valor_leitura", valor));
+        params.add(new BasicNameValuePair("valor_leitura", String.format("%s",valor)));
         params.add(new BasicNameValuePair("id_componente", String.valueOf(id_componente)));
-        params.add(new BasicNameValuePair("momento_leitura", String.valueOf(LocalDateTime.now())));
+        params.add(new BasicNameValuePair("momento_leitura", String.valueOf(dtf.format(now))));
         httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
         //Execute and get the response.
@@ -54,13 +57,15 @@ public class LeituraConnection {
         HttpClient httpclient = HttpClients.createDefault();
         HttpPost httppost = new HttpPost(this.url);
 
-        String valor = String.valueOf(this.cp.getSystemCpuLoadBetweenTicks() * 100);
+        // Formatando a DATA e Hora
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        double valor = this.cp.getSystemCpuLoadBetweenTicks() * 100;
         // Request parameters and other properties.
         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-        params.add(new BasicNameValuePair("nome_componente", "CPU"));
-        params.add(new BasicNameValuePair("valor_leitura", valor));
+        params.add(new BasicNameValuePair("valor_leitura", String.format("%.2f", valor)));
         params.add(new BasicNameValuePair("id_componente", String.valueOf(id_componente)));
-        params.add(new BasicNameValuePair("momento_leitura", String.valueOf(LocalDateTime.now())));
+        params.add(new BasicNameValuePair("momento_leitura", String.valueOf(dtf.format(now))));
         httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
         //Execute and get the response.
@@ -73,19 +78,18 @@ public class LeituraConnection {
 
         OSFileStore[] fsArray = fileSystem.getFileStores();
         for (OSFileStore fs : fsArray) {
-            long usable = fs.getUsableSpace();
-            long total = fs.getTotalSpace();
-
             HttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost(url);
 
+            // Formatando a DATA e Hora
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
             String valor = String.valueOf(fs.getUsableSpace());
-            // Request parameters and other properties.
+            // Parametros e outras propriedades do Request
             List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-            params.add(new BasicNameValuePair("nome_componente", "Disk"));
             params.add(new BasicNameValuePair("valor_leitura", valor));
             params.add(new BasicNameValuePair("id_componente", String.valueOf(id_componente)));
-            params.add(new BasicNameValuePair("momento_leitura", String.valueOf(LocalDateTime.now())));
+            params.add(new BasicNameValuePair("momento_leitura", String.valueOf(dtf.format(now)))); //2016/11/16 12:08:43
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
             //Execute and get the response.
