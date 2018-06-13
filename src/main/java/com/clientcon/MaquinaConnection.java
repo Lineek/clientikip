@@ -107,7 +107,7 @@ public class MaquinaConnection {
 
         //Execute and get the response.
         HttpResponse response = httpclient.execute(httppost);
-        HttpEntity entity = response.getEntity();
+//        HttpEntity entity = response.getEntity();
     }
 
     private Maquina JsonToMaquina(String json) {

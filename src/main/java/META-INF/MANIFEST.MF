@@ -1,4 +1,3 @@
 Manifest-Version: 1.0
-Class-Path: slf4j-nop.jar
 Main-Class: com.clientsystem.main
 

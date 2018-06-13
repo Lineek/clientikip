@@ -89,7 +89,7 @@ public class LeituraConnection {
             List<NameValuePair> params = new ArrayList<NameValuePair>(2);
             params.add(new BasicNameValuePair("valor_leitura", valor));
             params.add(new BasicNameValuePair("id_componente", String.valueOf(id_componente)));
-            params.add(new BasicNameValuePair("momento_leitura", String.valueOf(dtf.format(now)))); //2016/11/16 12:08:43
+            //params.add(new BasicNameValuePair("momento_leitura", String.valueOf(dtf.format(now)))); //2016/11/16 12:08:43
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
             //Execute and get the response.

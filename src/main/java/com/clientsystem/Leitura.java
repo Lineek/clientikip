@@ -44,7 +44,7 @@ public class Leitura {
 
         resultado.append("== informações da Leitura ==\n")
                 .append("id_leitura = ").append(getId_leitura())
-                .append("\nMomento = ").append(getMomento_leitura())
+                //.append("\nMomento = ").append(getMomento_leitura())
                 .append("\nValor = ").append(getValor_leitura())
                 .append("\nid Componente = ").append(getId_componente())
                 .append("\n");

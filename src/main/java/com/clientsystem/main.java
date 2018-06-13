@@ -16,17 +16,12 @@ public class main {
         MaquinaConnection maquinaConn = new MaquinaConnection();
         System.out.println("Iniciando Máquina");
 
-        try {
-            maquinaConn.MaquinaStart();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Não foi possível estabelecer conexão");
-        }
+        maquinaConn.MaquinaStart();
 
         Maquina maquina = maquinaConn.getMaquina();
-        // Iniciando Conexão com os componentes da máquina
+        // Iniciando Conexão com os componentes  máquina
         ComponenteConnection compConn = new ComponenteConnection();
-        compConn.ComponenteStart(maquina.getId_maquina());
+        compConn.ComponenteStart(maquina.getId_maquina()); //
         // Gerando Memória RAM
         final Componente ram = compConn.getRam();
         // Gerando CPU
@@ -107,7 +102,7 @@ public class main {
                     // Mensagem do Slack caso o valor de leitura for muito alto
                     // e só repete depois de 1 min
                     // TODO: POST em Alerta
-                    if(Double.parseDouble(leitura.getValor_leitura().replaceFirst(",", ".")) >= 80 && countCPU== 0) {
+                    if(Double.parseDouble(leitura.getValor_leitura().replaceFirst(",", ".")) >= 90 && countCPU== 0) {
                         WebHookMessages.CPUIs90Percent(cpu.getId_componente(), maquina.getId_maquina());
                         countCPU = 6;
                     } else if (Double.parseDouble(leitura.getValor_leitura().replaceFirst(",", ".")) >= 80 && countCPU == 0) {
